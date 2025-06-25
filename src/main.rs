@@ -2,6 +2,7 @@ mod e_find_all_k_distant_indices;
 mod e_two_sum;
 mod h_shortest_palindrome;
 mod h_substr_concat_all_words;
+mod m_3_sum;
 mod m_add_two_numbers;
 mod m_divide_two_int;
 mod m_longest_palindr_substr;
