@@ -1,6 +1,7 @@
 mod e_find_all_k_distant_indices;
 mod e_two_sum;
 mod h_kth_sml_prd_2sorted_arr;
+mod h_longest_valid_parentheses;
 mod h_shortest_palindrome;
 mod h_substr_concat_all_words;
 mod m_3_sum;
