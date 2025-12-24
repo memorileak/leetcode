@@ -1,3 +1,4 @@
+mod e_design_hashmap;
 mod e_find_all_k_distant_indices;
 mod e_find_the_orig_typed_string_i;
 mod e_longest_harmonious_subseq;
