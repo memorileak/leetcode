@@ -1,4 +1,5 @@
 pub struct Solution;
+pub struct RecursiveSolution;
 
 #[allow(dead_code)]
 impl Solution {
@@ -30,6 +31,32 @@ impl Solution {
     let m = all_sorted_cuts.len();
     let mut c = vec![vec![0; m]; m];
 
+    for l in 2..m {
+      for i in 0..(m - l) {
+        let j = i + l;
+        let join_cost = all_sorted_cuts[j] - all_sorted_cuts[i];
+        c[i][j] = i32::MAX;
+        for k in (i + 1)..j {
+          c[i][j] = c[i][j].min(c[i][k] + c[k][j] + join_cost);
+        }
+      }
+    }
+
+    c[0][m - 1]
+  }
+}
+
+#[allow(dead_code)]
+impl RecursiveSolution {
+  pub fn min_cost(n: i32, cuts: Vec<i32>) -> i32 {
+    let mut all_sorted_cuts = cuts;
+    all_sorted_cuts.push(0);
+    all_sorted_cuts.push(n);
+    all_sorted_cuts.sort_unstable();
+
+    let m = all_sorted_cuts.len();
+    let mut c = vec![vec![0; m]; m];
+
     for j in 2..m {
       for i in 0..j - 1 {
         Self::calc_cost(&all_sorted_cuts, &mut c, i, j);
@@ -52,8 +79,8 @@ impl Solution {
     let mut min_cost = i32::MAX;
     let join_cost = all_sorted_cuts[j] - all_sorted_cuts[i];
     for k in (i + 1)..j {
-      let left_cost = Solution::calc_cost(all_sorted_cuts, c, i, k);
-      let right_cost = Solution::calc_cost(all_sorted_cuts, c, k, j);
+      let left_cost = Self::calc_cost(all_sorted_cuts, c, i, k);
+      let right_cost = Self::calc_cost(all_sorted_cuts, c, k, j);
       min_cost = min_cost.min(left_cost + right_cost + join_cost);
     }
     c[i][j] = min_cost;
@@ -63,6 +90,7 @@ impl Solution {
 
 #[cfg(test)]
 mod tests {
+  use super::RecursiveSolution;
   use super::Solution;
 
   #[test]
@@ -75,6 +103,19 @@ mod tests {
     let n2 = 9;
     let cuts2 = vec![5, 6, 1, 4, 2];
     let result2 = Solution::min_cost(n2, cuts2);
+    assert_eq!(result2, 22);
+  }
+
+  #[test]
+  fn test_min_cost_recursive() {
+    let n = 7;
+    let cuts = vec![1, 3, 4, 5];
+    let result = RecursiveSolution::min_cost(n, cuts);
+    assert_eq!(result, 16);
+
+    let n2 = 9;
+    let cuts2 = vec![5, 6, 1, 4, 2];
+    let result2 = RecursiveSolution::min_cost(n2, cuts2);
     assert_eq!(result2, 22);
   }
 }
