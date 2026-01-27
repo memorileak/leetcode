@@ -21,6 +21,7 @@ mod m_longest_common_subsequence;
 mod m_longest_palindr_substr;
 mod m_longest_substr_wo_repeating_chars;
 mod m_max_events_can_attend;
+mod m_partition_k_eq_sum_subsets;
 mod m_repeated_dna_sequences;
 mod m_reverse_integer;
 mod m_zigzag_conversion;
