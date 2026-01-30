@@ -3,6 +3,7 @@ mod e_find_all_k_distant_indices;
 mod e_find_the_orig_typed_string_i;
 mod e_longest_harmonious_subseq;
 mod e_two_sum;
+mod h_burst_ballons;
 mod h_find_the_orig_typed_string_ii;
 mod h_kth_sml_prd_2sorted_arr;
 mod h_longest_valid_parentheses;
