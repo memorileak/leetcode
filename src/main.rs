@@ -27,6 +27,7 @@ mod m_min_cost_tree_from_leaf_values;
 mod m_partition_k_eq_sum_subsets;
 mod m_repeated_dna_sequences;
 mod m_reverse_integer;
+mod m_target_sum;
 mod m_zigzag_conversion;
 
 fn main() {
