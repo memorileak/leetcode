@@ -16,6 +16,7 @@ mod h_substr_concat_all_words;
 mod m_3_sum;
 mod m_add_two_numbers;
 mod m_coin_change;
+mod m_delete_operation_for_two_strings;
 mod m_divide_two_int;
 mod m_edit_distance;
 mod m_longest_common_subsequence;
