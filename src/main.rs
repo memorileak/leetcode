@@ -21,6 +21,7 @@ mod m_divide_two_int;
 mod m_edit_distance;
 mod m_longest_common_subsequence;
 mod m_longest_palindr_substr;
+mod m_longest_palindromic_subsequence;
 mod m_longest_string_chain;
 mod m_longest_substr_wo_repeating_chars;
 mod m_max_events_can_attend;
