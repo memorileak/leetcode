@@ -15,6 +15,7 @@ mod h_strange_printer;
 mod h_substr_concat_all_words;
 mod m_3_sum;
 mod m_add_two_numbers;
+mod m_can_i_win;
 mod m_coin_change;
 mod m_delete_operation_for_two_strings;
 mod m_divide_two_int;
