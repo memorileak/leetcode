@@ -11,6 +11,7 @@ mod h_max_events_can_attend_ii;
 mod h_min_cost_to_cut_a_stick;
 mod h_painting_the_walls;
 mod h_shortest_palindrome;
+mod h_shortest_path_visiting_all_nodes;
 mod h_strange_printer;
 mod h_substr_concat_all_words;
 mod m_3_sum;
