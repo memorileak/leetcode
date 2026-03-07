@@ -26,6 +26,7 @@ mod m_longest_palindr_substr;
 mod m_longest_palindromic_subsequence;
 mod m_longest_string_chain;
 mod m_longest_substr_wo_repeating_chars;
+mod m_max_area_of_island;
 mod m_max_events_can_attend;
 mod m_min_cost_tree_from_leaf_values;
 mod m_number_of_islands;
