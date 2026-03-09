@@ -14,6 +14,7 @@ mod h_shortest_palindrome;
 mod h_shortest_path_visiting_all_nodes;
 mod h_strange_printer;
 mod h_substr_concat_all_words;
+mod h_word_ladder;
 mod m_3_sum;
 mod m_add_two_numbers;
 mod m_can_i_win;
