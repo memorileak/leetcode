@@ -1,7 +1,84 @@
-pub struct Solution;
+// pub struct KahnTopoSortSolution;
+//
+// #[allow(dead_code)]
+// impl KahnTopoSortSolution {
+//   pub fn longest_increasing_path(matrix: Vec<Vec<i32>>) -> i32 {
+//     0
+//   }
+// }
+
+pub struct RecursiveDFSSolution;
 
 #[allow(dead_code)]
-impl Solution {
+impl RecursiveDFSSolution {
+  pub fn longest_increasing_path(matrix: Vec<Vec<i32>>) -> i32 {
+    let m = matrix.len();
+    if m == 0 {
+      return 0;
+    }
+
+    let n = matrix[0].len();
+    if n == 0 {
+      return 0;
+    }
+
+    let mut longest: Vec<Vec<u16>> = vec![vec![0; n]; m];
+    let mut final_longest: u16 = 0;
+
+    for i in 0..m {
+      for j in 0..n {
+        final_longest = final_longest.max(Self::dfs_longest(&matrix, &mut longest, i, j));
+      }
+    }
+
+    final_longest as i32
+  }
+
+  pub fn dfs_longest(
+    matrix: &Vec<Vec<i32>>,
+    longest: &mut Vec<Vec<u16>>,
+    i: usize,
+    j: usize,
+  ) -> u16 {
+    if longest[i][j] > 0 {
+      return longest[i][j];
+    }
+
+    let m = matrix.len();
+    let n = matrix[0].len();
+    let mut l: u16 = 0;
+
+    // Left neighbor
+    if j > 0 && matrix[i][j - 1] > matrix[i][j] {
+      l = l.max(Self::dfs_longest(matrix, longest, i, j - 1));
+    }
+
+    // Right neighbor
+    if j < n - 1 && matrix[i][j + 1] > matrix[i][j] {
+      l = l.max(Self::dfs_longest(matrix, longest, i, j + 1));
+    }
+
+    // Above neighbor
+    if i > 0 && matrix[i - 1][j] > matrix[i][j] {
+      l = l.max(Self::dfs_longest(matrix, longest, i - 1, j));
+    }
+
+    // Below neighbor
+    if i < m - 1 && matrix[i + 1][j] > matrix[i][j] {
+      l = l.max(Self::dfs_longest(matrix, longest, i + 1, j));
+    }
+
+    longest[i][j] = 1 + l;
+
+    longest[i][j]
+  }
+}
+
+pub struct IterativeDFSSolution;
+
+#[allow(dead_code)]
+impl IterativeDFSSolution {
+  // Accepted but not optimized. The runtime is kinda slow.
   pub fn longest_increasing_path(matrix: Vec<Vec<i32>>) -> i32 {
     let m = matrix.len();
     if m == 0 {
@@ -116,7 +193,7 @@ impl Solution {
 
 #[cfg(test)]
 mod tests {
-  use super::Solution;
+  use super::RecursiveDFSSolution as Solution;
 
   #[test]
   fn test_example_1() {

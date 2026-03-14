@@ -44,6 +44,16 @@ pub struct Solution;
 //
 // │ Note: In BFS, mark visited before adding to queue to avoid duplicates. In
 // │ iterative DFS, check visited after popping.
+//
+//  ## Recursive DFS Pseudocode
+//
+//  DFS(node, visited):
+//      mark node as visited
+//      process(node)
+//
+//      for each neighbor of node:
+//          if neighbor is not visited:
+//              DFS(neighbor, visited)
 
 #[allow(dead_code)]
 impl Solution {
