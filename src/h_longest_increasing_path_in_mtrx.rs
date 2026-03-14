@@ -1,11 +1,136 @@
-// pub struct KahnTopoSortSolution;
+// Kahn's Topological Sort (Pseudocode)
 //
-// #[allow(dead_code)]
-// impl KahnTopoSortSolution {
-//   pub fn longest_increasing_path(matrix: Vec<Vec<i32>>) -> i32 {
-//     0
-//   }
-// }
+//   KahnsTopoSort(graph):
+//       // 1. Compute in-degree for each vertex
+//       in_degree = array of 0s for all vertices
+//       for each vertex u in graph:
+//           for each neighbor v of u:
+//               in_degree[v] += 1
+//
+//       // 2. Enqueue all vertices with in-degree 0
+//       queue = empty queue
+//       for each vertex v:
+//           if in_degree[v] == 0:
+//               queue.enqueue(v)
+//
+//       // 3. Process the queue
+//       result = empty list
+//       while queue is not empty:
+//           u = queue.dequeue()
+//           result.append(u)
+//
+//           for each neighbor v of u:
+//               in_degree[v] -= 1
+//               if in_degree[v] == 0:
+//                   queue.enqueue(v)
+//
+//       // 4. Cycle detection
+//       if len(result) != number of vertices:
+//           return "Cycle exists! No valid topological order."
+//
+//       return result
+//
+// Key idea: Repeatedly remove vertices with no incoming edges (in-degree = 0)
+// and reduce the in-degree of their neighbors.
+//
+// • Time Complexity: O(V + E)
+// • Space Complexity: O(V)
+
+use std::collections::VecDeque;
+
+pub struct KahnTopoSortSolution;
+
+#[allow(dead_code)]
+impl KahnTopoSortSolution {
+  pub fn longest_increasing_path(matrix: Vec<Vec<i32>>) -> i32 {
+    let m = matrix.len();
+    if m == 0 {
+      return 0;
+    }
+
+    let n = matrix[0].len();
+    if n == 0 {
+      return 0;
+    }
+
+    let mut in_degree: Vec<Vec<u8>> = vec![vec![0; n]; m];
+    let mut queue: VecDeque<(u16, usize, usize)> = VecDeque::new();
+
+    for i in 0..m {
+      for j in 0..n {
+        let mut idgr: u8 = 0;
+
+        // Left neighbor
+        if j > 0 && matrix[i][j - 1] < matrix[i][j] {
+          idgr += 1;
+        }
+
+        // Right neighbor
+        if j < n - 1 && matrix[i][j + 1] < matrix[i][j] {
+          idgr += 1;
+        }
+
+        // Above neighbor
+        if i > 0 && matrix[i - 1][j] < matrix[i][j] {
+          idgr += 1;
+        }
+
+        // Below neighbor
+        if i < m - 1 && matrix[i + 1][j] < matrix[i][j] {
+          idgr += 1;
+        }
+
+        if idgr == 0 {
+          queue.push_back((1, i, j));
+        } else {
+          in_degree[i][j] = idgr;
+        }
+      }
+    }
+
+    let mut final_longest: u16 = 0;
+
+    while !queue.is_empty() {
+      let (l, i, j) = queue.pop_front().unwrap();
+
+      final_longest = l;
+
+      // Left neighbor
+      if j > 0 && matrix[i][j - 1] > matrix[i][j] {
+        in_degree[i][j - 1] -= 1;
+        if in_degree[i][j - 1] == 0 {
+          queue.push_back((l + 1, i, j - 1));
+        }
+      }
+
+      // Right neighbor
+      if j < n - 1 && matrix[i][j + 1] > matrix[i][j] {
+        in_degree[i][j + 1] -= 1;
+        if in_degree[i][j + 1] == 0 {
+          queue.push_back((l + 1, i, j + 1));
+        }
+      }
+
+      // Above neighbor
+      if i > 0 && matrix[i - 1][j] > matrix[i][j] {
+        in_degree[i - 1][j] -= 1;
+        if in_degree[i - 1][j] == 0 {
+          queue.push_back((l + 1, i - 1, j));
+        }
+      }
+
+      // Below neighbor
+      if i < m - 1 && matrix[i + 1][j] > matrix[i][j] {
+        in_degree[i + 1][j] -= 1;
+        if in_degree[i + 1][j] == 0 {
+          queue.push_back((l + 1, i + 1, j));
+        }
+      }
+    }
+
+    final_longest as i32
+  }
+}
 
 pub struct RecursiveDFSSolution;
 
@@ -193,7 +318,7 @@ impl IterativeDFSSolution {
 
 #[cfg(test)]
 mod tests {
-  use super::RecursiveDFSSolution as Solution;
+  use super::KahnTopoSortSolution as Solution;
 
   #[test]
   fn test_example_1() {
