@@ -58,42 +58,40 @@
 //
 // • Time: O(E)
 // • Space: O(E)
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 pub struct Solution;
 
 #[allow(dead_code)]
 impl Solution {
   pub fn find_itinerary(tickets: Vec<Vec<String>>) -> Vec<String> {
-    let mut graph: HashMap<&str, Vec<&str>> = HashMap::new();
+    let mut graph: HashMap<&str, Vec<(bool, &str)>> = HashMap::new();
 
     for t in tickets.iter() {
-      graph.entry(&t[0]).or_default().push(&t[1]);
+      graph.entry(&t[0]).or_default().push((false, &t[1]));
     }
 
     for (_, v) in graph.iter_mut() {
-      v.sort_unstable();
+      v.sort_unstable_by_key(|n| n.1);
     }
 
     let mut stack: Vec<&str> = Vec::new();
     let mut path: Vec<&str> = Vec::new();
-    let mut used_edges: HashSet<(&str, usize)> = HashSet::new();
-    let no_neighbors: Vec<&str> = vec![];
+    let mut no_neighbors: Vec<(bool, &str)> = vec![];
 
     stack.push("JFK");
 
     while !stack.is_empty() {
       let &node = stack.last().unwrap();
 
-      let neighbors = graph.get(node).unwrap_or(&no_neighbors);
+      let neighbors: &mut Vec<(bool, &str)> = graph.get_mut(node).unwrap_or(&mut no_neighbors);
       let mut has_undiscovered_edges = false;
 
-      for i in 0..neighbors.len() {
-        let edge = (node, i);
-        if !used_edges.contains(&edge) {
-          stack.push(neighbors[i]);
-          used_edges.insert(edge);
+      for neighbor in neighbors.iter_mut() {
+        if neighbor.0 == false {
           has_undiscovered_edges = true;
+          neighbor.0 = true;
+          stack.push(neighbor.1);
           break;
         }
       }
